@@ -98,6 +98,7 @@ struct repo_config_values {
 	int precomposed_unicode;
 	int core_sparse_checkout_cone;
 	int warn_on_object_refname_ambiguity;
+	char *excludes_file;
 
 	/* section "sparse" config values */
 	int sparse_expect_files_outside_of_patterns;
@@ -140,6 +141,8 @@ int git_default_core_config(const char *var, const char *value,
 const char *repo_excludes_file(struct repository *repo);
 
 void repo_config_values_init(struct repo_config_values *cfg);
+
+void repo_config_values_clear(struct repository *repo);
 
 /*
  * TODO: All the below state either explicitly or implicitly relies on
@@ -214,7 +217,6 @@ extern char *git_log_output_encoding;
 
 extern char *editor_program;
 extern char *askpass_program;
-extern char *excludes_file;
 
 /*
  * The character that begins a commented line in user-editable file
