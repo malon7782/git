@@ -87,9 +87,45 @@ extern const char * const local_repo_env[];
 struct strvec;
 
 struct repository;
+
+/*
+ * NEEDSWORK: It would be better if these definitions could be moved to
+ * other more specific files, but care is needed to avoid circular
+ * inclusion issues.
+ */
+enum push_default_type {
+	PUSH_DEFAULT_NOTHING = 0,
+	PUSH_DEFAULT_MATCHING,
+	PUSH_DEFAULT_SIMPLE,
+	PUSH_DEFAULT_UPSTREAM,
+	PUSH_DEFAULT_CURRENT,
+	PUSH_DEFAULT_UNSPECIFIED
+};
+
+enum rebase_setup_type {
+	AUTOREBASE_NEVER = 0,
+	AUTOREBASE_LOCAL,
+	AUTOREBASE_REMOTE,
+	AUTOREBASE_ALWAYS
+};
+
+enum object_creation_mode {
+	OBJECT_CREATION_USES_HARDLINKS = 0,
+	OBJECT_CREATION_USES_RENAMES = 1
+};
+
 struct repo_config_values {
 	/* section "core" config values */
 	char *attributes_file;
+	char *excludes_file;
+	char *editor_program;
+	char *pager_program;
+	char *askpass_program;
+	char *apply_default_whitespace;
+	char *apply_default_ignorewhitespace;
+	enum push_default_type push_default;
+	enum rebase_setup_type autorebase;
+	enum object_creation_mode object_creation_mode;
 	int apply_sparse_checkout;
 	int trust_ctime;
 	int check_stat;
@@ -133,7 +169,18 @@ int git_default_config(const char *, const char *,
 int git_default_core_config(const char *var, const char *value,
 			    const struct config_context *ctx, void *cb);
 
+const char *repo_excludes_file(struct repository *repo);
+
 void repo_config_values_init(struct repo_config_values *cfg);
+
+/*
+ * Frees memory allocated for dynamically loaded configuration values
+ * inside `repo_config_values`.
+ *
+ * As dynamically allocated variables are migrated into this struct,
+ * their FREE_AND_NULL() calls should be appended here.
+ */
+void repo_config_values_clear(struct repository *repo);
 
 /*
  * TODO: All the below state either explicitly or implicitly relies on
@@ -167,36 +214,10 @@ extern int has_symlinks;
 extern int minimum_abbrev, default_abbrev;
 extern int ignore_case;
 extern int assume_unchanged;
-extern char *apply_default_whitespace;
-extern char *apply_default_ignorewhitespace;
 extern unsigned long pack_size_limit_cfg;
 
 extern int protect_hfs;
 extern int protect_ntfs;
-
-enum rebase_setup_type {
-	AUTOREBASE_NEVER = 0,
-	AUTOREBASE_LOCAL,
-	AUTOREBASE_REMOTE,
-	AUTOREBASE_ALWAYS
-};
-extern enum rebase_setup_type autorebase;
-
-enum push_default_type {
-	PUSH_DEFAULT_NOTHING = 0,
-	PUSH_DEFAULT_MATCHING,
-	PUSH_DEFAULT_SIMPLE,
-	PUSH_DEFAULT_UPSTREAM,
-	PUSH_DEFAULT_CURRENT,
-	PUSH_DEFAULT_UNSPECIFIED
-};
-extern enum push_default_type push_default;
-
-enum object_creation_mode {
-	OBJECT_CREATION_USES_HARDLINKS = 0,
-	OBJECT_CREATION_USES_RENAMES = 1
-};
-extern enum object_creation_mode object_creation_mode;
 
 extern int grafts_keep_true_parents;
 
@@ -206,9 +227,7 @@ const char *get_commit_output_encoding(void);
 extern char *git_commit_encoding;
 extern char *git_log_output_encoding;
 
-extern char *editor_program;
 extern char *askpass_program;
-extern char *excludes_file;
 
 /*
  * The character that begins a commented line in user-editable file
