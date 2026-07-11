@@ -1064,7 +1064,7 @@ static void setup_git_env_internal(struct repository *repo,
 		set_alternate_shallow_file(repo, shallow_file, 0);
 
 	if (git_env_bool(NO_LAZY_FETCH_ENVIRONMENT, 0))
-		fetch_if_missing = 0;
+		the_repository->fetch_if_missing = 0;
 }
 
 static void set_git_dir_1(struct repository *repo, const char *path)
