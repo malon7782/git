@@ -95,6 +95,8 @@ struct repo_config_values {
 	int check_stat;
 	int zlib_compression_level;
 	int pack_compression_level;
+	int minimum_abbrev;
+	int default_abbrev;
 	int precomposed_unicode;
 	int core_sparse_checkout_cone;
 	int warn_on_object_refname_ambiguity;
@@ -151,6 +153,9 @@ int repo_protect_ntfs(struct repository *repo);
  */
 int repo_ignore_case(struct repository *repo);
 
+int repo_minimum_abbrev(struct repository *repo);
+int repo_default_abbrev(struct repository *repo);
+
 void repo_config_values_init(struct repo_config_values *cfg);
 
 int is_bare_repository(struct repository *repo);
@@ -180,7 +185,6 @@ int have_git_dir(void);
 /* Environment bits from configuration mechanism */
 extern int trust_executable_bit;
 extern int has_symlinks;
-extern int minimum_abbrev, default_abbrev;
 extern int assume_unchanged;
 extern char *apply_default_whitespace;
 extern char *apply_default_ignorewhitespace;

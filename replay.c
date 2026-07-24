@@ -27,7 +27,7 @@ static const char *short_commit_name(struct repository *repo,
 				     struct commit *commit)
 {
 	return repo_find_unique_abbrev(repo, &commit->object.oid,
-				       DEFAULT_ABBREV);
+				       repo_default_abbrev(repo));
 }
 
 static struct commit *peel_committish(struct repository *repo,
