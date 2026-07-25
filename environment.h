@@ -101,6 +101,8 @@ struct repo_config_values {
 	int protect_hfs;
 	int protect_ntfs;
 	int ignore_case;
+	unsigned long pack_size_limit_cfg;
+
 
 	/* section "sparse" config values */
 	int sparse_expect_files_outside_of_patterns;
@@ -184,7 +186,6 @@ extern int minimum_abbrev, default_abbrev;
 extern int assume_unchanged;
 extern char *apply_default_whitespace;
 extern char *apply_default_ignorewhitespace;
-extern unsigned long pack_size_limit_cfg;
 
 enum rebase_setup_type {
 	AUTOREBASE_NEVER = 0,
