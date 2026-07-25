@@ -777,7 +777,7 @@ static void format_commit(struct strbuf *sb,
 {
 	struct merge_remote_desc *desc;
 	struct pretty_print_context ctx = {0};
-	ctx.abbrev = DEFAULT_ABBREV;
+	ctx.abbrev = repo_default_abbrev(repo);
 
 	strbuf_addchars(sb, ' ', indent);
 	desc = merge_remote_util(commit);
@@ -2035,7 +2035,8 @@ cleanup:
 		util->flag = sub_flag;
 		util->abbrev = NULL;
 		if (!sub_not_initialized) {
-			abbrev = repo_find_unique_abbrev(&subrepo, b, DEFAULT_ABBREV);
+			abbrev = repo_find_unique_abbrev(&subrepo, b,
+							repo_default_abbrev(opt->repo));
 			util->abbrev = xstrdup(abbrev);
 		}
 		string_list_append(csub, path)->util = util;
@@ -5348,7 +5349,7 @@ static void merge_ort_internal(struct merge_options *opt,
 	} else {
 		strbuf_add_unique_abbrev(&merge_base_abbrev,
 					 &merged_merge_bases->object.oid,
-					 DEFAULT_ABBREV);
+					 repo_default_abbrev(opt->repo));
 		ancestor_name = merge_base_abbrev.buf;
 	}
 
