@@ -95,6 +95,7 @@ struct repo_config_values {
 	int check_stat;
 	int zlib_compression_level;
 	int pack_compression_level;
+	int assume_unchanged;
 	int precomposed_unicode;
 	int core_sparse_checkout_cone;
 	int warn_on_object_refname_ambiguity;
@@ -183,7 +184,6 @@ int have_git_dir(void);
 extern int trust_executable_bit;
 extern int has_symlinks;
 extern int minimum_abbrev, default_abbrev;
-extern int assume_unchanged;
 extern char *apply_default_whitespace;
 extern char *apply_default_ignorewhitespace;
 

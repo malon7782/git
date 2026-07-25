@@ -44,7 +44,6 @@ static int zlib_compression_seen;
 int trust_executable_bit = 1;
 int has_symlinks = 1;
 int minimum_abbrev = 4, default_abbrev = -1;
-int assume_unchanged;
 char *git_commit_encoding;
 char *git_log_output_encoding;
 char *apply_default_whitespace;
@@ -355,7 +354,7 @@ int git_default_core_config(const char *var, const char *value,
 	}
 
 	if (!strcmp(var, "core.ignorestat")) {
-		assume_unchanged = git_config_bool(var, value);
+		cfg->assume_unchanged = git_config_bool(var, value);
 		return 0;
 	}
 
@@ -737,6 +736,7 @@ void repo_config_values_init(struct repo_config_values *cfg)
 	cfg->check_stat = 1;
 	cfg->zlib_compression_level = Z_BEST_SPEED;
 	cfg->pack_compression_level = Z_DEFAULT_COMPRESSION;
+	cfg->assume_unchanged = 0;
 	cfg->precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
 	cfg->core_sparse_checkout_cone = 0;
 	cfg->sparse_expect_files_outside_of_patterns = 0;
