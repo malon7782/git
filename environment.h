@@ -97,6 +97,7 @@ struct repo_config_values {
 	int pack_compression_level;
 	int minimum_abbrev;
 	int default_abbrev;
+	unsigned long pack_size_limit_cfg;
 	int precomposed_unicode;
 	int core_sparse_checkout_cone;
 	int warn_on_object_refname_ambiguity;
@@ -188,7 +189,6 @@ extern int has_symlinks;
 extern int assume_unchanged;
 extern char *apply_default_whitespace;
 extern char *apply_default_ignorewhitespace;
-extern unsigned long pack_size_limit_cfg;
 
 enum rebase_setup_type {
 	AUTOREBASE_NEVER = 0,
