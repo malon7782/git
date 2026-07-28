@@ -1273,6 +1273,7 @@ static int odb_transaction_files_write_object_stream(struct odb_transaction *bas
 						     size_t size,
 						     struct object_id *result_oid)
 {
+	struct repo_config_values *cfg = repo_config_values(the_repository);
 	struct odb_transaction_files *transaction = container_of(base,
 								 struct odb_transaction_files,
 								 base);
@@ -1298,8 +1299,8 @@ static int odb_transaction_files_write_object_stream(struct odb_transaction *bas
 	 * the difference between the inflated and on-disk size is limited
 	 * to zlib compression and is sufficient for this check.
 	 */
-	if (state->nr_written && pack_size_limit_cfg &&
-	    pack_size_limit_cfg < state->offset + size)
+	if (state->nr_written && cfg->pack_size_limit_cfg &&
+	    cfg->pack_size_limit_cfg < state->offset + size)
 		flush_packfile_transaction(transaction);
 
 	CALLOC_ARRAY(idx, 1);

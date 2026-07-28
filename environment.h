@@ -95,12 +95,15 @@ struct repo_config_values {
 	int check_stat;
 	int zlib_compression_level;
 	int pack_compression_level;
+	int assume_unchanged;
 	int precomposed_unicode;
 	int core_sparse_checkout_cone;
 	int warn_on_object_refname_ambiguity;
 	int protect_hfs;
 	int protect_ntfs;
 	int ignore_case;
+	unsigned long pack_size_limit_cfg;
+
 
 	/* section "sparse" config values */
 	int sparse_expect_files_outside_of_patterns;
@@ -181,10 +184,8 @@ int have_git_dir(void);
 extern int trust_executable_bit;
 extern int has_symlinks;
 extern int minimum_abbrev, default_abbrev;
-extern int assume_unchanged;
 extern char *apply_default_whitespace;
 extern char *apply_default_ignorewhitespace;
-extern unsigned long pack_size_limit_cfg;
 
 enum rebase_setup_type {
 	AUTOREBASE_NEVER = 0,

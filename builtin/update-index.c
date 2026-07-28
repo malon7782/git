@@ -419,6 +419,7 @@ static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
 {
 	int len, option;
 	struct cache_entry *ce;
+	struct repo_config_values *cfg = repo_config_values(the_repository);
 
 	if (!verify_path(path, mode))
 		return error("Invalid path '%s'", path);
@@ -431,7 +432,7 @@ static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
 	ce->ce_flags = create_ce_flags(stage);
 	ce->ce_namelen = len;
 	ce->ce_mode = create_ce_mode(mode);
-	if (assume_unchanged)
+	if (cfg->assume_unchanged)
 		ce->ce_flags |= CE_VALID;
 	option = allow_add ? ADD_CACHE_OK_TO_ADD : 0;
 	option |= allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
