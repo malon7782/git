@@ -133,8 +133,8 @@ struct object *repo_peel_to_type(struct repository *r,
 				 struct object *o, enum object_type);
 
 /* Convert to/from hex/sha1 representation */
-#define MINIMUM_ABBREV minimum_abbrev
-#define DEFAULT_ABBREV default_abbrev
+#define MINIMUM_ABBREV repo_minimum_abbrev(the_repository)
+#define DEFAULT_ABBREV repo_default_abbrev(the_repository)
 
 /* used when the code does not know or care what the default abbrev is */
 #define FALLBACK_DEFAULT_ABBREV 7

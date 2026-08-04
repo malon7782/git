@@ -5813,7 +5813,7 @@ static const char *label_oid(struct object_id *oid, const char *label,
 		label = p = state->buf.buf;
 
 		repo_find_unique_abbrev_r(the_repository, p, oid,
-					  default_abbrev);
+					  repo_default_abbrev(the_repository));
 
 		/*
 		 * We may need to extend the abbreviated hash so that there is
@@ -5875,7 +5875,8 @@ static const char *label_oid(struct object_id *oid, const char *label,
 				strbuf_addch(buf, '-');
 		if (!buf->len) {
 			strbuf_addstr(buf, "rev-");
-			strbuf_add_unique_abbrev(buf, oid, default_abbrev);
+			strbuf_add_unique_abbrev(buf, oid,
+						 repo_default_abbrev(the_repository));
 		}
 		label = buf->buf;
 
