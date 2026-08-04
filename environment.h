@@ -121,16 +121,11 @@ struct repo_config_values {
 	char *editor_program;
 	char *pager_program;
 	char *askpass_program;
-	char *apply_default_whitespace;
-	char *apply_default_ignorewhitespace;
-	enum push_default_type push_default;
-	enum rebase_setup_type autorebase;
 	enum object_creation_mode object_creation_mode;
 	int apply_sparse_checkout;
 	int trust_ctime;
 	int check_stat;
 	int zlib_compression_level;
-	int pack_compression_level;
 	int precomposed_unicode;
 	int core_sparse_checkout_cone;
 	int warn_on_object_refname_ambiguity;
@@ -140,11 +135,22 @@ struct repo_config_values {
 	int trust_executable_bit;
 	int has_symlinks;
 
-	/* section "sparse" config values */
-	int sparse_expect_files_outside_of_patterns;
+	/* section "apply" config values */
+	char *apply_default_whitespace;
+	char *apply_default_ignorewhitespace;
 
 	/* section "branch" config values */
+	enum rebase_setup_type autorebase; /* mapped from branch.autoSetupRebase */
 	enum branch_track branch_track;
+
+	/* section "pack" config values */
+	int pack_compression_level;
+
+	/* section "push" config values */
+	enum push_default_type push_default;
+
+	/* section "sparse" config values */
+	int sparse_expect_files_outside_of_patterns;
 };
 
 struct repo_config_values *repo_config_values(struct repository *repo);
